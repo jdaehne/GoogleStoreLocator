@@ -1,0 +1,24 @@
+<form action="[[~[[*id]]]]" method="post">
+    <a onclick="javascript:navigator.geolocation.getCurrentPosition(definePosition);">myPosition</a>
+    <input type="text" name="location" value="[[+location]]">
+    <select name="radius">
+        <option value="5" [[+radius:is=`5`:then=`selected`]]>5 km</option>
+        <option value="10" [[+radius:is=`10`:then=`selected`]]>10 km</option>
+        <option value="20" [[+radius:is=`20`:then=`selected`]]>20 km</option>
+        <option value="50" [[+radius:is=`50`:then=`selected`]]>50 km</option>
+        <option value="100" [[+radius:is=`100`:then=`selected`]]>100 km</option>
+    </select>
+    <button type="submit">search</button>
+</form>
+
+<script>
+    var longitude, latitude;
+    
+    function definePosition(position){
+        longitude = position.coords.longitude;
+        latitude = position.coords.latitude;
+        
+        //Reload with current user position
+        window.location.href = "[[~[[*id]]]]?lat=" + latitude + "&lng=" + longitude;
+    }
+</script>

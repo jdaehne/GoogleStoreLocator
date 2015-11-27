@@ -1,0 +1,21 @@
+<div id="googleStoreLocatorMap" [[+mapCSS:notempty=`style="[[+mapCSS]]"`]]></div>
+<script>
+    function initMap() {
+        var centerMap = {lat: [[+latCenter]], lng: [[+longCenter]]};
+        
+        var map = new google.maps.Map(document.getElementById('googleStoreLocatorMap'), {
+            zoom: [[+zoom]],
+            center: centerMap
+        });
+        
+        var infowindow = new google.maps.InfoWindow({
+            maxWidth: 200
+        });
+        
+        [[+mapStyle:notempty=`var styles = [[+mapStyle]] 
+        map.setOptions({styles: styles});`]]
+        
+        [[+marker]]
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap[[+apiKey:notempty=`&key=[[+apiKey]]&signed_in=true`]]"></script>

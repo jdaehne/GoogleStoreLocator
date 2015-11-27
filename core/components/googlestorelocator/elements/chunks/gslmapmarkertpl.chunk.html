@@ -1,0 +1,10 @@
+var marker = new google.maps.Marker({
+    position: {lat: [[+lat]], lng: [[+long]]},
+    map: map,
+    title: '[[+pagetitle]]',
+    content: '[[+content]]'
+});
+    marker.addListener('click', function() {
+    infowindow.setContent(this.content);
+    infowindow.open(map, this);
+});
