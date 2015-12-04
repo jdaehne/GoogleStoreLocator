@@ -5,6 +5,7 @@
         
         var map = new google.maps.Map(document.getElementById('googleStoreLocatorMap'), {
             zoom: [[+zoom]],
+            scrollwheel: false,
             center: centerMap
         });
         
@@ -16,6 +17,14 @@
         map.setOptions({styles: styles});`]]
         
         [[+marker]]
+        
+        [[+showLocation:notempty=`
+        var marker = new google.maps.Marker({
+            position: {lat: [[+latCenter]], lng: [[+longCenter]]},
+            map: map,
+            title: 'position',
+            icon: '[[+markerImageLocation]]'
+        });`]]
     }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap[[+apiKey:notempty=`&key=[[+apiKey]]&signed_in=true`]]"></script>

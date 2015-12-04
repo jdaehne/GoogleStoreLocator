@@ -3,7 +3,7 @@
  * chunks transport file for GoogleStoreLocator extra
  *
  * Copyright 2015 by Quadro - Jan Dähne info@quadro-system.de
- * Created on 11-27-2015
+ * Created on 12-04-2015
  *
  * @package googlestorelocator
  * @subpackage build
