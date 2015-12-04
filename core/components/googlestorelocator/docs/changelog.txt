@@ -1,5 +1,13 @@
 Changelog for GoogleStoreLocator
 
+GoogleStoreLocator 1.1.0
+---------------------------------
++ Add Property "limit" and  "offset" to limit and offset results
++ Add Property "tvFilter" to filter stores by TVs
++ Add Property "markerImage" and "markerImageLocation" to set custom Image as marker on the map
++ Add Property "location" and "locationRadius" to order the stores by default
+
+
 GoogleStoreLocator 1.0.0
 ---------------------------------
 Initial Version

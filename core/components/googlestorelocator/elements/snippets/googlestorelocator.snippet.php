@@ -10,6 +10,13 @@ $include_tvs = $modx->getOption('includeTVs', $scriptProperties, false, true);
 $tv_prefix = $modx->getOption('tvPrefix', $scriptProperties, 'tv', true);
 $unit = $modx->getOption('unit', $scriptProperties, 'K', true);
 $default_radius = $modx->getOption('defaultRadius', $scriptProperties, 20, true);
+$limit = $modx->getOption('limit', $scriptProperties, 0, true);
+$offset = $modx->getOption('offset', $scriptProperties, 0, true);
+$location = $modx->getOption('location', $scriptProperties);
+$location_radius = $modx->getOption('locationRadius', $scriptProperties, 0, true);
+$marker_image = $modx->getOption('markerImage', $scriptProperties);
+$marker_image_location = $modx->getOption('markerImageLocation', $scriptProperties, 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png', true);
+$tv_filter = $modx->getOption('tvFilter', $scriptProperties);
 
 
 // Templating parameters
@@ -60,7 +67,7 @@ if(!function_exists(filterStoresByDistance)) {
             $distance = distance($lat, $lng, $store['lat'], $store['long'], $unit);
             $distance = intval($distance);
     
-            if ($distance <= $radius){
+            if ($distance <= $radius or $radius == 0){
                 $stores_radius[$id] = $distance;
             }
         }
@@ -101,7 +108,7 @@ if ($modx->cacheManager->get('stores') != true){
         $address .= ($page->getTVValue($tvname_city) != '' ? $page->getTVValue($tvname_city).',' : '');
         $address .= ($page->getTVValue($tvname_state) != '' ? $page->getTVValue($tvname_state).',' : '');
         $address .= ($page->getTVValue($tvname_country) != '' ? $page->getTVValue($tvname_country).',' : '');
-        $address = str_replace(' ', '+', $address);
+        $address = urlencode($address);
         $geocode = file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false');
         $output = json_decode($geocode);
         $lat = (!empty($output->results[0]->geometry->location->lat) ? $output->results[0]->geometry->location->lat : 0);
@@ -156,7 +163,7 @@ $total = count($stores);
 
 //If getting userPosition - sort Stores
 if (!empty($_REQUEST['lat']) and !empty($_REQUEST['lng'])) {
-    $stores = filterStoresByDistance($stores, 999999, $_REQUEST['lat'], $_REQUEST['lng'], $unit);
+    $stores = filterStoresByDistance($stores, 0, $_REQUEST['lat'], $_REQUEST['lng'], $unit);
     
     //Centering Map to Position
     $lat_center = $_REQUEST['lat'];
@@ -167,15 +174,15 @@ if (!empty($_REQUEST['lat']) and !empty($_REQUEST['lng'])) {
 
 
 //If search-Form is send - sort Stores
-//Get lat & lng of Input Addresss & Limit Store List to Radius
-if (!empty($_REQUEST['location'])){
-    $address = str_replace(' ', '+', $_REQUEST['location']);
+//Get lat & lng of Input Addresss or location-Property & Limit Store List to Radius
+if (!empty($_REQUEST['location']) or !empty($location)){
+    $address = urlencode(!empty($_REQUEST['location']) ? $_REQUEST['location'] : $location);
     $geocode = file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false');
     $output = json_decode($geocode);
     $lat = $output->results[0]->geometry->location->lat;
     $lng = $output->results[0]->geometry->location->lng;
-    $radius = (int) $_REQUEST['radius'];
-    
+    $radius = (int) isset($_REQUEST['radius']) ? $_REQUEST['radius'] : $location_radius;
+
     //Centering Map to Position
     $lat_center = $lat;
     $lng_center = $lng;
@@ -183,6 +190,19 @@ if (!empty($_REQUEST['location'])){
     
     //Get Filtered Stores
     $stores = filterStoresByDistance($stores, $radius, $lat, $lng, $unit);
+}
+
+
+//Filtering Stores BY TV
+if (!empty($tv_filter)) { 
+    $tmp_stores = array();
+    list($tv, $operand) = explode("==", $tv_filter);
+    foreach ($stores as $store) {
+        if ($store[placeholder]["tv.$tv"] == $operand) {
+            $tmp_stores[] = $store;
+        }
+    }
+    $stores = $tmp_stores;
 }
 
 
@@ -196,8 +216,14 @@ $formOutput = $modx->getChunk($tpl_form, array(
 //Storelist + 
 //Map Info Window +
 //Map Marker to Placeholder
+$i=0;
 if (is_array($stores)) {
     foreach ($stores as $store) {
+        
+        //limiot & offset for pagination
+        if ($i++ < $offset) continue;
+        if ($i > $offset + $limit and $limit > 0) break;
+        
         //Storelist
         $storeListOutput .= $modx->getChunk($tpl_store, $store[placeholder]);
    
@@ -209,6 +235,7 @@ if (is_array($stores)) {
             'lat' => $store[lat],
             'long' => $store[long],
             'content' => $mapMarkerInfoOutput,
+            'markerImage' => $marker_image,
         ));
     }
 }else {
@@ -224,6 +251,8 @@ $mapOutput = $modx->getChunk('gslMapTpl', array(
 	'mapCSS' => $map_css,
 	'apiKey' => $modx->getOption('googlestorelocator_googleapikey'),
 	'mapStyle' => $map_style,
+	'showLocation' => isset($_REQUEST['location']) ? true : false,
+	'markerImageLocation' => $marker_image_location,
 ));
 
 
