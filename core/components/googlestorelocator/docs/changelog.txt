@@ -1,5 +1,11 @@
 Changelog for GoogleStoreLocator
 
+GoogleStoreLocator 1.1.1
+---------------------------------
++ Add Property "sortby" to sort the default results by any Resource Field
++ Add Property "sortbyTV" to sort the default results by any included TV
+
+
 GoogleStoreLocator 1.1.0
 ---------------------------------
 + Add Property "limit" and  "offset" to limit and offset results

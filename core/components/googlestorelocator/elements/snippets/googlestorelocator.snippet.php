@@ -17,6 +17,8 @@ $location_radius = $modx->getOption('locationRadius', $scriptProperties, 0, true
 $marker_image = $modx->getOption('markerImage', $scriptProperties);
 $marker_image_location = $modx->getOption('markerImageLocation', $scriptProperties, 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png', true);
 $tv_filter = $modx->getOption('tvFilter', $scriptProperties);
+$sortby = $modx->getOption('sortby', $scriptProperties, 'menuindex', true);
+$sortby_tv = $modx->getOption('sortbyTV', $scriptProperties);
 
 
 // Templating parameters
@@ -88,11 +90,14 @@ if(!function_exists(filterStoresByDistance)) {
 //If default Storelist is not chached: create
 if ($modx->cacheManager->get('stores') != true){
 
-    $resources = $modx->getCollection('modResource', array(
+    $c = $modx->newQuery('modResource');
+    $c->sortby($sortby, "ASC");
+    $c->where(array(
         'parent:IN' => $parents,
         'deleted' => false,
         'published' => true,
-        ));
+    ));
+    $resources = $modx->getCollection('modResource', $c);
     
     $stores = array();
     
@@ -146,6 +151,20 @@ if ($modx->cacheManager->get('stores') != true){
             );
            
         $stores[] = $element;
+    }
+
+    //Sorting Stores by TV
+    if (!empty($sortby_tv) and isset($stores[0][placeholder]["tv.".$sortby_tv])) {
+        foreach ($stores as $id => $store) {
+            $stores_sort[$id] = $store[placeholder]["tv.".$sortby_tv];
+        }
+        asort($stores_sort);
+        unset($stores_tmp);
+        foreach ($stores_sort as $id => $store) {
+            $stores[$id][placeholder]["tv.".$sortby_tv] = $store;
+            $stores_tmp[] = $stores[$id];
+        }
+        $stores = $stores_tmp;
     }
     
     //Storelist to cache
