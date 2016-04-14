@@ -1,8 +1,9 @@
 <div id="googleStoreLocatorMap" [[+mapCSS:notempty=`style="[[+mapCSS]]"`]]></div>
 <script>
     function initMap() {
-        var centerMap = {lat: [[+latCenter]], lng: [[+longCenter]]};
+        var bounds  = new google.maps.LatLngBounds();
         
+        var centerMap = {lat: [[+latCenter]], lng: [[+longCenter]]};
         var map = new google.maps.Map(document.getElementById('googleStoreLocatorMap'), {
             zoom: [[+zoom]],
             scrollwheel: false,
@@ -24,7 +25,18 @@
             map: map,
             title: 'position',
             icon: '[[+markerImageLocation]]'
+        });
+        var loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
+        bounds.extend(loc);`]]
+        
+        
+        [[+autoZoomCenter:notempty=`
+        map.fitBounds(bounds);
+        map.panToBounds(bounds);
+        google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
+            this.setZoom(Math.min([[+zoom]], this.getZoom()));
         });`]]
+        
     }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap[[+apiKey:notempty=`&key=[[+apiKey]]&signed_in=true`]]"></script>

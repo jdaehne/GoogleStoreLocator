@@ -19,6 +19,7 @@ $marker_image_location = $modx->getOption('markerImageLocation', $scriptProperti
 $tv_filter = $modx->getOption('tvFilter', $scriptProperties);
 $sortby = $modx->getOption('sortby', $scriptProperties, 'menuindex', true);
 $sortby_tv = $modx->getOption('sortbyTV', $scriptProperties);
+$region = $modx->getOption('region', $scriptProperties);
 
 
 // Templating parameters
@@ -36,6 +37,7 @@ $lat_center = $modx->getOption('latCenter', $scriptProperties, '49.14721', true)
 $lng_center = $modx->getOption('lngCenter', $scriptProperties, '8.2202', true);
 $map_css = $modx->getOption('mapCSS', $scriptProperties, 'height: 400px; margin: 30px 0;', true);
 $map_style = $modx->getOption('mapStyle', $scriptProperties, '', true);
+$auto_zoom_center = $modx->getOption('autoZoomCenter', $scriptProperties);
 
 
 
@@ -116,8 +118,8 @@ if ($modx->cacheManager->get('stores') != true){
         $address = urlencode($address);
         $geocode = file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false');
         $output = json_decode($geocode);
-        $lat = (!empty($output->results[0]->geometry->location->lat) ? $output->results[0]->geometry->location->lat : 0);
-        $lng = (!empty($output->results[0]->geometry->location->lng) ? $output->results[0]->geometry->location->lng : 0);
+        $lat = str_replace(",", ".", (!empty($output->results[0]->geometry->location->lat) ? $output->results[0]->geometry->location->lat : 0));
+        $lng = str_replace(",", ".", (!empty($output->results[0]->geometry->location->lng) ? $output->results[0]->geometry->location->lng : 0));
     
         unset($placeholder);
 
@@ -196,10 +198,11 @@ if (!empty($_REQUEST['lat']) and !empty($_REQUEST['lng'])) {
 //Get lat & lng of Input Addresss or location-Property & Limit Store List to Radius
 if (!empty($_REQUEST['location']) or !empty($location)){
     $address = urlencode(!empty($_REQUEST['location']) ? $_REQUEST['location'] : $location);
-    $geocode = file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false');
+    $region = $region ? '&region='.$region : '';
+    $geocode = file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false'.$region);
     $output = json_decode($geocode);
-    $lat = $output->results[0]->geometry->location->lat;
-    $lng = $output->results[0]->geometry->location->lng;
+    $lat = str_replace(",", ".", $output->results[0]->geometry->location->lat);
+    $lng = str_replace(",", ".", $output->results[0]->geometry->location->lng);
     $radius = (int) isset($_REQUEST['radius']) ? $_REQUEST['radius'] : $location_radius;
 
     //Centering Map to Position
@@ -272,6 +275,7 @@ $mapOutput = $modx->getChunk('gslMapTpl', array(
 	'mapStyle' => $map_style,
 	'showLocation' => isset($_REQUEST['location']) ? true : false,
 	'markerImageLocation' => $marker_image_location,
+	'autoZoomCenter' => $auto_zoom_center,
 ));
 
 

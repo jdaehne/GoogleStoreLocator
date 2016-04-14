@@ -5,7 +5,9 @@ var marker = new google.maps.Marker({
     content: '[[+content]]',
     icon: '[[+markerImage]]'
 });
-    marker.addListener('click', function() {
+marker.addListener('click', function() {
     infowindow.setContent(this.content);
     infowindow.open(map, this);
 });
+var loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng()); 
+bounds.extend(loc); 

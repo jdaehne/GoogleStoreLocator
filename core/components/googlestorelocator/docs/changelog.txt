@@ -1,5 +1,12 @@
 Changelog for GoogleStoreLocator
 
+GoogleStoreLocator 1.1.2
+---------------------------------
++ Add Property "region" to prefer a region for Google to search for the geo-data
++ Fix forcing the latitude and longitude value to be a float
++ Add Property "autoZoomCenter" to make the map automatic center and zoom to fit all markers
+
+
 GoogleStoreLocator 1.1.1
 ---------------------------------
 + Add Property "sortby" to sort the default results by any Resource Field
