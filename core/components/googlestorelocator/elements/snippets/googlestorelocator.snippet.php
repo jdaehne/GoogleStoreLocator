@@ -15,7 +15,7 @@ $offset = $modx->getOption('offset', $scriptProperties, 0, true);
 $location = $modx->getOption('location', $scriptProperties);
 $location_radius = $modx->getOption('locationRadius', $scriptProperties, 0, true);
 $marker_image = $modx->getOption('markerImage', $scriptProperties);
-$marker_image_location = $modx->getOption('markerImageLocation', $scriptProperties, 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png', true);
+$marker_image_location = $modx->getOption('markerImageLocation', $scriptProperties, 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png', true);
 $tv_filter = $modx->getOption('tvFilter', $scriptProperties);
 $sortby = $modx->getOption('sortby', $scriptProperties, 'menuindex', true);
 $sortby_tv = $modx->getOption('sortbyTV', $scriptProperties);
@@ -39,6 +39,9 @@ $map_css = $modx->getOption('mapCSS', $scriptProperties, 'height: 400px; margin:
 $map_style = $modx->getOption('mapStyle', $scriptProperties, '', true);
 $auto_zoom_center = $modx->getOption('autoZoomCenter', $scriptProperties);
 
+
+//System Settings
+$apikey = $modx->getOption('googlestorelocator_googleapikey');
 
 
 // **********************************************************************
@@ -116,7 +119,7 @@ if ($modx->cacheManager->get('stores') != true){
         $address .= ($page->getTVValue($tvname_state) != '' ? $page->getTVValue($tvname_state).',' : '');
         $address .= ($page->getTVValue($tvname_country) != '' ? $page->getTVValue($tvname_country).',' : '');
         $address = urlencode($address);
-        $geocode = file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false');
+        $geocode = file_get_contents('https://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false&key='.$apikey); 
         $output = json_decode($geocode);
         $lat = str_replace(",", ".", (!empty($output->results[0]->geometry->location->lat) ? $output->results[0]->geometry->location->lat : 0));
         $lng = str_replace(",", ".", (!empty($output->results[0]->geometry->location->lng) ? $output->results[0]->geometry->location->lng : 0));
@@ -199,7 +202,7 @@ if (!empty($_REQUEST['lat']) and !empty($_REQUEST['lng'])) {
 if (!empty($_REQUEST['location']) or !empty($location)){
     $address = urlencode(!empty($_REQUEST['location']) ? $_REQUEST['location'] : $location);
     $region = $region ? '&region='.$region : '';
-    $geocode = file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false'.$region);
+    $geocode = file_get_contents('https://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false'.$region.'&key='.$apikey);
     $output = json_decode($geocode);
     $lat = str_replace(",", ".", $output->results[0]->geometry->location->lat);
     $lng = str_replace(",", ".", $output->results[0]->geometry->location->lng);
@@ -250,7 +253,12 @@ if (is_array($stores)) {
         $storeListOutput .= $modx->getChunk($tpl_store, $store[placeholder]);
    
         //Info Window
-        $mapMarkerInfoOutput = $modx->getChunk($tpl_marker, $store[placeholder]);
+        //Replacing/escaping single quotes for the js-map
+        $js_store_placeholder = $store[placeholder];
+        foreach ($js_store_placeholder as $key => $value) {
+            $js_store_placeholder[$key] = str_replace("'","\\'", $value);
+        }
+        $mapMarkerInfoOutput = $modx->getChunk($tpl_marker, $js_store_placeholder);
         
         //Marker setzen
         $mapMarkerOutput .= $modx->getChunk('gslMapMarkerTpl', array(
@@ -271,7 +279,7 @@ $mapOutput = $modx->getChunk('gslMapTpl', array(
 	'latCenter' => $lat_center,
 	'longCenter' => $lng_center,
 	'mapCSS' => $map_css,
-	'apiKey' => $modx->getOption('googlestorelocator_googleapikey'),
+	'apiKey' => $apikey,
 	'mapStyle' => $map_style,
 	'showLocation' => isset($_REQUEST['location']) ? true : false,
 	'markerImageLocation' => $marker_image_location,
