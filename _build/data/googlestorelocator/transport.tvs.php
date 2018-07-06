@@ -1,9 +1,9 @@
 <?php
 /**
- * templateVars transport file for GoogleStoreLocator extra
+ * templateVars transport file for googlestorelocator extra
  *
- * Copyright 2015 by Quadro - Jan Dähne info@quadro-system.de
- * Created on 12-04-2015
+ * Copyright 2018 by Quadro - Jan Dähne <https://www.quadro-system.de>
+ * Created on 07-07-2018
  *
  * @package googlestorelocator
  * @subpackage build
@@ -28,136 +28,49 @@ $templateVars = array();
 $templateVars[1] = $modx->newObject('modTemplateVar');
 $templateVars[1]->fromArray(array (
   'id' => 1,
-  'property_preprocess' => false,
-  'type' => 'text',
-  'name' => 'gslStreet',
-  'caption' => 'Street',
   'description' => '',
-  'elements' => '',
-  'rank' => 10,
-  'display' => 'default',
+  'caption' => 'City',
   'default_text' => '',
-  'properties' => 
-  array (
-  ),
-  'input_properties' => 
-  array (
-    'allowBlank' => 'true',
-    'maxLength' => '',
-    'minLength' => '',
-    'regex' => '',
-    'regexText' => '',
-  ),
-  'output_properties' => 
-  array (
-  ),
+  'name' => 'gslCity',
 ), '', true, true);
 $templateVars[2] = $modx->newObject('modTemplateVar');
 $templateVars[2]->fromArray(array (
   'id' => 2,
-  'property_preprocess' => false,
-  'type' => 'text',
-  'name' => 'gslCountry',
-  'caption' => 'Country',
   'description' => '',
-  'elements' => '',
-  'rank' => 50,
-  'display' => 'default',
+  'caption' => 'Country',
   'default_text' => '',
-  'properties' => 
-  array (
-  ),
-  'input_properties' => 
-  array (
-    'allowBlank' => 'true',
-    'maxLength' => '',
-    'minLength' => '',
-    'regex' => '',
-    'regexText' => '',
-  ),
-  'output_properties' => 
-  array (
-  ),
+  'name' => 'gslCountry',
 ), '', true, true);
 $templateVars[3] = $modx->newObject('modTemplateVar');
 $templateVars[3]->fromArray(array (
   'id' => 3,
-  'property_preprocess' => false,
-  'type' => 'text',
-  'name' => 'gslCity',
-  'caption' => 'City',
   'description' => '',
-  'elements' => '',
-  'rank' => 30,
-  'display' => 'default',
+  'caption' => 'Housenumber',
   'default_text' => '',
-  'properties' => 
-  array (
-  ),
-  'input_properties' => 
-  array (
-    'allowBlank' => 'true',
-    'maxLength' => '',
-    'minLength' => '',
-    'regex' => '',
-    'regexText' => '',
-  ),
-  'output_properties' => 
-  array (
-  ),
+  'name' => 'gslHousenumber',
 ), '', true, true);
 $templateVars[4] = $modx->newObject('modTemplateVar');
 $templateVars[4]->fromArray(array (
   'id' => 4,
-  'property_preprocess' => false,
-  'type' => 'text',
-  'name' => 'gslState',
-  'caption' => 'State',
   'description' => '',
-  'elements' => '',
-  'rank' => 40,
-  'display' => 'default',
+  'caption' => 'State',
   'default_text' => '',
-  'properties' => 
-  array (
-  ),
-  'input_properties' => 
-  array (
-    'allowBlank' => 'true',
-    'maxLength' => '',
-    'minLength' => '',
-    'regex' => '',
-    'regexText' => '',
-  ),
-  'output_properties' => 
-  array (
-  ),
+  'name' => 'gslState',
 ), '', true, true);
 $templateVars[5] = $modx->newObject('modTemplateVar');
 $templateVars[5]->fromArray(array (
   'id' => 5,
-  'property_preprocess' => false,
-  'type' => 'text',
-  'name' => 'gslZip',
-  'caption' => 'Zip',
   'description' => '',
-  'elements' => '',
-  'rank' => 20,
-  'display' => 'default',
+  'caption' => 'Street',
   'default_text' => '',
-  'properties' => 
-  array (
-  ),
-  'input_properties' => 
-  array (
-    'allowBlank' => 'true',
-    'maxLength' => '',
-    'minLength' => '',
-    'regex' => '',
-    'regexText' => '',
-  ),
-  'output_properties' => 
-  array (
-  ),
+  'name' => 'gslStreet',
+), '', true, true);
+$templateVars[6] = $modx->newObject('modTemplateVar');
+$templateVars[6]->fromArray(array (
+  'id' => 6,
+  'description' => '',
+  'caption' => 'Zipcode',
+  'default_text' => '',
+  'name' => 'gslZipcode',
 ), '', true, true);
 return $templateVars;

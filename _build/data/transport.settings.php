@@ -1,9 +1,9 @@
 <?php
 /**
- * systemSettings transport file for GoogleStoreLocator extra
+ * systemSettings transport file for googlestorelocator extra
  *
- * Copyright 2015 by Quadro - Jan Dähne info@quadro-system.de
- * Created on 12-04-2015
+ * Copyright 2018 by Quadro - Jan Dähne <https://www.quadro-system.de>
+ * Created on 07-07-2018
  *
  * @package googlestorelocator
  * @subpackage build
@@ -27,12 +27,22 @@ $systemSettings = array();
 
 $systemSettings[1] = $modx->newObject('modSystemSetting');
 $systemSettings[1]->fromArray(array (
-  'key' => 'googlestorelocator_googleapikey',
-  'value' => '',
-  'xtype' => 'textfield',
+  'key' => 'googlestorelocator.apikey_map',
+  'name' => 'API-Key Frontent',
+  'description' => 'This API-Key is used for displaying the map in the fronend.',
   'namespace' => 'googlestorelocator',
-  'area' => 'googlestorelocator',
-  'name' => 'Google API-Key',
-  'description' => 'Optional Google API-Key. It is not required.',
+  'xtype' => 'textfield',
+  'value' => '',
+  'area' => 'API',
+), '', true, true);
+$systemSettings[2] = $modx->newObject('modSystemSetting');
+$systemSettings[2]->fromArray(array (
+  'key' => 'googlestorelocator.apikey_server',
+  'name' => 'API-Key Server',
+  'description' => 'This API-Key is used for fetching the data from the Google-API-Server.',
+  'namespace' => 'googlestorelocator',
+  'xtype' => 'textfield',
+  'value' => '',
+  'area' => 'API',
 ), '', true, true);
 return $systemSettings;

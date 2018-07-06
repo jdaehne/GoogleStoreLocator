@@ -1,11 +1,11 @@
 
-GoogleStoreLocator
+googlestorelocator
 
 
-Author: Quadro - Jan Dähne info@quadro-system.de
-Copyright 2015
+Author: Quadro - Jan Dähne <https://www.quadro-system.de>
+Copyright 2018
 
-Official Documentation: http://www.quadro-system.de/modx-extras/googlestorelocator.html
+Official Documentation: https://www.quadro-system.de/modx-extras/google-store-locator/
 
 Bugs and Feature Requests: https://github.com:jdaehne/GoogleStoreLocator
 

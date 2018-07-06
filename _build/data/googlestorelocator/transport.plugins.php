@@ -1,6 +1,6 @@
 <?php
 /**
- * snippets transport file for googlestorelocator extra
+ * plugins transport file for googlestorelocator extra
  *
  * Copyright 2018 by Quadro - Jan Dähne <https://www.quadro-system.de>
  * Created on 07-07-2018
@@ -20,17 +20,17 @@ if (! function_exists('stripPhpTags')) {
 }
 /* @var $modx modX */
 /* @var $sources array */
-/* @var xPDOObject[] $snippets */
+/* @var xPDOObject[] $plugins */
 
 
-$snippets = array();
+$plugins = array();
 
-$snippets[1] = $modx->newObject('modSnippet');
-$snippets[1]->fromArray(array (
+$plugins[1] = $modx->newObject('modPlugin');
+$plugins[1]->fromArray(array (
   'id' => 1,
-  'description' => 'A dynamic Store Locator for MODX using the Google-Map-API',
+  'description' => 'A dynamic Store Locator Snippet for MODX using the Google-Map-API',
   'name' => 'GoogleStoreLocator',
 ), '', true, true);
-$snippets[1]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/googlestorelocator.snippet.php'));
+$plugins[1]->setContent(file_get_contents($sources['source_core'] . '/elements/plugins/googlestorelocator.plugin.php'));
 
-return $snippets;
+return $plugins;

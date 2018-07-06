@@ -1,5 +1,22 @@
 Changelog for GoogleStoreLocator
 
+GoogleStoreLocator 2.0
+---------------------------------
++ Add tv housenumber (propertie &tvname_housenumber)
++ Add sorting every placeholder
++ Add filtering
++ Add debug-mode
++ Add propertie &tplMapMarkerContent
++ Add propertie &tplMapMarker 
++ Add propertie &tplMap 
++ Add placeholder [[+gsl.lat]] [[+gsl.lng]] for Latitude and Longitude in Store-Template
++ Change property &tplMarker to &tplMarkerContent
++ Change property &sortby_tv to &sortby
++ Change tv gslZip to gslZipcode
++ Change propertie &tvname_zip to &tvname_zipcode
++ Change default value of propertie &locationRadius to 20
+
+
 
 GoogleStoreLocator 1.1.4
 ---------------------------------

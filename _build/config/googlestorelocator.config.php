@@ -13,17 +13,17 @@ $packageNameLower = 'googlestorelocator'; /* No spaces, no dashes */
 
 $components = array(
     /* These are used to define the package and set values for placeholders */
-    'packageName' => 'GoogleStoreLocator',  /* No spaces, no dashes */
+    'packageName' => 'googlestorelocator',  /* No spaces, no dashes */
     'packageNameLower' => $packageNameLower,
-    'packageDescription' => 'Proximity search of Stores based on the Google API.',
-    'version' => '1.1.4',
+    'packageDescription' => 'Proximity search plugin for MODX',
+    'version' => '2.0.0',
     'release' => 'pl',
     'author' => 'Quadro - Jan Dähne',
-    'email' => 'info@quadro-system.de',
-    'authorUrl' => 'http://www.quadro-system.de',
+    'email' => '<https://www.quadro-system.de>',
+    'authorUrl' => 'https://www.quadro-system.de',
     'authorSiteName' => "Quadro",
-    'packageDocumentationUrl' => 'http://www.quadro-system.de/modx-extras/googlestorelocator.html',
-    'copyright' => '2015',
+    'packageDocumentationUrl' => 'https://www.quadro-system.de/modx-extras/google-store-locator/',
+    'copyright' => '2018',
 
     /* no need to edit this except to change format */
     'createdon' => strftime('%m-%d-%Y'),
@@ -57,14 +57,45 @@ $components = array(
 
     'newSystemSettings' => array(
         'googlestorelocator_system_setting1' => array( // key
-            'key' => 'googlestorelocator_googleapikey',
-            'name' => 'Google API-Key',
-            'description' => 'Optional Google API-Key. It is not required.',
+            'key' => 'googlestorelocator.apikey_map',
+            'name' => 'API-Key Frontent',
+            'description' => 'This API-Key is used for displaying the map in the fronend.',
             'namespace' => 'googlestorelocator',
             'xtype' => 'textfield',
+            'value' => '',
+            'area' => 'API',
+        ),
+        'googlestorelocator_system_setting2' => array( // key
+            'key' => 'googlestorelocator.apikey_server',
+            'name' => 'API-Key Server',
+            'description' => 'This API-Key is used for fetching the data from the Google-API-Server.',
+            'namespace' => 'googlestorelocator',
+            'xtype' => 'textfield',
+            'value' => '',
+            'area' => 'API',
         ),
     ),
 
+    /* ************************ NEW SYSTEM EVENTS ************************* */
+
+    /* Array of your new System Events (not default
+     * MODX System Events). Listed here so they can be created during
+     * install and removed during uninstall.
+     *
+     * Warning: Do *not* list regular MODX System Events here !!! */
+
+     /*
+    'newSystemEvents' => array(
+        'OnMyEvent1' => array(
+            'name' => 'OnMyEvent1',
+        ),
+        'OnMyEvent2' => array(
+            'name' => 'OnMyEvent2',
+            'groupname' => 'googlestorelocator',
+            'service' => 1,
+        ),
+    ),
+    */
 
     /* ************************ NAMESPACE(S) ************************* */
     /* (optional) Typically, there's only one namespace which is set
@@ -80,6 +111,53 @@ $components = array(
 
     ),
 
+    /* ************************ CONTEXT(S) ************************* */
+    /* (optional) List any contexts other than the 'web' context here
+    */
+
+    /*
+    'contexts' => array(
+        'googlestorelocator' => array(
+            'key' => 'googlestorelocator',
+            'description' => 'googlestorelocator context',
+            'rank' => 2,
+        )
+    ),
+    */
+
+    /* *********************** CONTEXT SETTINGS ************************ */
+
+    /* If your extra needs Context Settings, set their field values here.
+     * You can also create or edit them in the Manager (Edit Context -> Context Settings),
+     * and export them with exportObjects. If you do that, be sure to set
+     * their namespace to the lowercase package name of your extra.
+     * The context_key should be the name of an actual context.
+     * */
+
+     /*
+    'contextSettings' => array(
+        'googlestorelocator_context_setting1' => array(
+            'context_key' => 'googlestorelocator',
+            'key' => 'googlestorelocator_context_setting1',
+            'name' => 'googlestorelocator Setting One',
+            'description' => 'Description for setting one',
+            'namespace' => 'googlestorelocator',
+            'xtype' => 'textfield',
+            'value' => 'value1',
+            'area' => 'googlestorelocator',
+        ),
+        'googlestorelocator_context_setting2' => array(
+            'context_key' => 'googlestorelocator',
+            'key' => 'googlestorelocator_context_setting2',
+            'name' => 'googlestorelocator Setting Two',
+            'description' => 'Description for setting two',
+            'namespace' => 'googlestorelocator',
+            'xtype' => 'combo-boolean',
+            'value' => true,
+            'area' => 'googlestorelocator',
+        ),
+    ),
+    */
 
     /* ************************* CATEGORIES *************************** */
     /* (optional) List of categories. This is only necessary if you
@@ -94,6 +172,38 @@ $components = array(
         ),
     ),
 
+    /* *************************** MENUS ****************************** */
+
+    /* If your extra needs Menus, you can create them here
+     * or create them in the Manager, and export them with exportObjects.
+     * Be sure to set their namespace to the lowercase package name
+     * of your extra.
+     *
+     * Every menu should have exactly one action */
+
+     /*
+    'menus' => array(
+        'googlestorelocator' => array(
+            'text' => 'googlestorelocator',
+            'parent' => 'components',
+            'description' => 'ex_menu_desc',
+            'icon' => '',
+            'menuindex' => 0,
+            'params' => '',
+            'handler' => '',
+            'permissions' => '',
+
+            'action' => array(
+                'id' => '',
+                'namespace' => 'googlestorelocator',
+                'controller' => 'index',
+                'haslayout' => true,
+                'lang_topics' => 'googlestorelocator:default',
+                'assets' => '',
+            ),
+        ),
+    ),
+    */
 
 
     /* ************************* ELEMENTS **************************** */
@@ -115,67 +225,155 @@ $components = array(
 
     'elements' => array(
 
+
+
+
         'snippets' => array(
             'GoogleStoreLocator' => array(
-                'category' => 'GoogleStoreLocator',
+                'category' => 'googlestorelocator',
+                'description' => 'A dynamic Store Locator for MODX using the Google-Map-API',
+                'static' => true,
+            ),
+        ),
+        'plugins' => array(
+            'GoogleStoreLocator' => array( /* googlestorelocator with static, events, and property sets */
+                'category' => 'googlestorelocator',
+                'description' => 'A dynamic Store Locator Snippet for MODX using the Google-Map-API',
+                'static' => false,
+                'events' => array(
+                    /* minimal googlestorelocator - no fields */
+                    'OnDocFormSave' => array(),
+                    'OnLoadWebDocument' => array(),
+                    'OnSiteRefresh' => array(),
+                ),
             ),
         ),
         'chunks' => array(
             'gslFormTpl' => array(
-                'category' => 'GoogleStoreLocator',
+                'category' => 'googlestorelocator',
             ),
-            'gslMapMarkerInfoTpl' => array(
-                'category' => 'GoogleStoreLocator',
+            'gslMapMarkerContentTpl' => array(
+                'category' => 'googlestorelocator',
             ),
             'gslMapMarkerTpl' => array(
-                'category' => 'GoogleStoreLocator',
+                'category' => 'googlestorelocator',
             ),
             'gslMapTpl' => array(
-                'category' => 'GoogleStoreLocator',
-            ),
-            'gslStoreTpl' => array(
-                'category' => 'GoogleStoreLocator',
+                'category' => 'googlestorelocator',
             ),
             'gslNoResultTpl' => array(
-                'category' => 'GoogleStoreLocator',
+                'category' => 'googlestorelocator',
+            ),
+            'gslStoreTpl' => array(
+                'category' => 'googlestorelocator',
             ),
         ),
         'templateVars' => array(
             'gslCity' => array(
-                'category' => 'GoogleStoreLocator',
+                'category' => 'googlestorelocator',
+                'description' => '',
                 'caption' => 'City',
+                'default_text' => '',
+                'propertySets' => array(),
+                'templates' => array(),
             ),
             'gslCountry' => array(
-                'category' => 'GoogleStoreLocator',
+                'category' => 'googlestorelocator',
+                'description' => '',
                 'caption' => 'Country',
+                'default_text' => '',
+                'propertySets' => array(),
+                'templates' => array(),
+            ),
+            'gslHousenumber' => array(
+                'category' => 'googlestorelocator',
+                'description' => '',
+                'caption' => 'Housenumber',
+                'default_text' => '',
+                'propertySets' => array(),
+                'templates' => array(),
             ),
             'gslState' => array(
-                'category' => 'GoogleStoreLocator',
+                'category' => 'googlestorelocator',
+                'description' => '',
                 'caption' => 'State',
+                'default_text' => '',
+                'propertySets' => array(),
+                'templates' => array(),
             ),
             'gslStreet' => array(
-                'category' => 'GoogleStoreLocator',
+                'category' => 'googlestorelocator',
+                'description' => '',
                 'caption' => 'Street',
+                'default_text' => '',
+                'propertySets' => array(),
+                'templates' => array(),
             ),
-            'gslZip' => array(
-                'category' => 'GoogleStoreLocator',
-                'caption' => 'Zip-Code',
+            'gslZipcode' => array(
+                'category' => 'googlestorelocator',
+                'description' => '',
+                'caption' => 'Zipcode',
+                'default_text' => '',
+                'propertySets' => array(),
+                'templates' => array(),
             ),
         ),
     ),
+    /* (optional) will make all element objects static - 'static' field above will be ignored */
+    'allStatic' => false,
+
+
+    /* ************************* RESOURCES ****************************
+     Important: This list only affects Bootstrap. There is another
+     list of resources below that controls ExportObjects.
+     * ************************************************************** */
+    /* Array of Resource pagetitles for your Extra; All other fields optional.
+       You can set any resource field here */
+    'resources' => array(),
 
 
     /* Array of languages for which you will have language files,
      *  and comma-separated list of topics
      *  ('.inc.php' will be added as a suffix). */
-    'languages' => array(
-        'en' => array(
-            'default',
-            'properties',
-            'forms',
-        ),
-    ),
+    'languages' => array(),
+    /* ********************************************* */
+    /* Define optional directories to create under assets.
+     * Add your own as needed.
+     * Set to true to create directory.
+     * Set to hasAssets = false to skip.
+     * Empty js and/or css files will be created.
+     */
+    'hasAssets' => false,
 
+    'assetsDirs' => array(
+        /* If true, a default (empty) CSS file will be created */
+        'css' => false,
+
+        /* If true, a default (empty) JS file will be created */
+        'js' => true,
+
+        'images' => true,
+        'audio' => true,
+        'video' => true,
+        'themes' => true,
+    ),
+    /* minify any JS files */
+    'minifyJS' => false,
+    /* Create a single JS file from all JS files */
+    'createJSMinAll' => true,
+    /* if this is false, regular jsmin will be used.
+       JSMinPlus is slower but more reliable */
+    'useJSMinPlus' => true,
+
+    /* These will automatically go under assets/components/yourcomponent/js/
+       Format: directory:filename
+       (no trailing slash on directory)
+       if 'createCmpFiles is true, these will be ignored.
+    */
+    'jsFiles' => array(),
+
+    /* Desired CSS files */
+    'cssFiles' => array(),
 
     /* ********************************************* */
     /* Define basic directories and files to be created in project*/
@@ -192,6 +390,33 @@ $components = array(
     /* assume every package has a core directory */
     'hasCore' => true,
 
+    /* ********************************************* */
+    /* (optional) Array of extra script resolver(s) to be run
+     * during install. Note that resolvers to connect plugins to events,
+     * property sets to elements, resources to templates, and TVs to
+     * templates will be created automatically -- *don't* list those here!
+     *
+     * 'default' creates a default resolver named after the package.
+     * (other resolvers may be created above for TVs and plugins).
+     * Suffix 'resolver.php' will be added automatically */
+    'resolvers' => array(
+        'default',
+    ),
+
+    /* (optional) Validators can abort the install after checking
+     * conditions. Array of validator names (no
+     * prefix of suffix) or '' 'default' creates a default resolver
+     *  named after the package suffix 'validator.php' will be added */
+
+    'validators' => array(),
+
+    /* (optional) install.options is needed if you will interact
+     * with user during the install.
+     * See the user.input.php file for more information.
+     * Set this to 'install.options' or ''
+     * The file will be created as _build/install.options/user.input.php
+     * Don't change the filename or directory name. */
+    'install.options' => 'install.options',
 
 
     /* Suffixes to use for resource and element code files (not implemented)  */
@@ -203,6 +428,36 @@ $components = array(
         'modResource' => '.html',
     ),
 
+
+    /* ********************************************* */
+    /* (optional) Only necessary if you will have class files.
+     *
+     * Array of class files to be created.
+     *
+     * Format is:
+     *
+     * 'ClassName' => 'directory:filename',
+     *
+     * or
+     *
+     *  'ClassName' => 'filename',
+     *
+     * ('.class.php' will be appended automatically)
+     *
+     *  Class file will be created as:
+     * yourcomponent/core/components/yourcomponent/model/[directory/]{filename}.class.php
+     * Note: If a CMP is being created, classes containing the
+     * project name will be ignored here.
+     *
+     * Set to array() if there are no classes. */
+    'classes' => array(
+        'AnotherClass' => 'googlestorelocator:googlestorelocator',
+
+        /* (optional) - Specify methods for each class.
+           if 'function' is missing, 'public function ' will
+           be prepended. Curly braces will be added   */
+        'methods' => array(),
+    ),
 
     /* ************************************
      *  These values are for CMPs.
@@ -295,9 +550,9 @@ $components = array(
     */
     'process' => array(
         'snippets',
+        'plugins',
         'templateVars',
         'chunks',
-        'propertySets',
         'systemSettings',
     ),
     /*  Array  of resources to process. You can specify specific resources
