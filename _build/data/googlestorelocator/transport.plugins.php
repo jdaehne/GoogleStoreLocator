@@ -3,7 +3,7 @@
  * plugins transport file for googlestorelocator extra
  *
  * Copyright 2018 by Quadro - Jan Dähne <https://www.quadro-system.de>
- * Created on 07-07-2018
+ * Created on 07-08-2018
  *
  * @package googlestorelocator
  * @subpackage build
