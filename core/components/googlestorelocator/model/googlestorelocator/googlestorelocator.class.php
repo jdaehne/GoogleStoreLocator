@@ -123,9 +123,12 @@ class GoogleStoreLocator {
                 $store = $stores[$key] = array_merge($store, $latlng);
             }
 
+            if (!empty($store['lat']) and !empty($store['lng'])) {
+                $this->addCache($store);
+            }
+
             $stores[] = $store;
 
-            $this->addCache($store);
         }
 
         return $stores;
@@ -191,9 +194,12 @@ class GoogleStoreLocator {
             $this->modx->log(xPDO::LOG_LEVEL_ERROR, '[GoogleStoreLocator] Could not get Geo-Data of Address: ' . $address . ' Errormessage: ' . $geodata->error_message);
         }
 
+        $lat = str_replace(",", ".", $geodata->results[0]->geometry->location->lat);
+        $lng = str_replace(",", ".", $geodata->results[0]->geometry->location->lng);
+
         $data = array(
-            'lat' => $geodata->results[0]->geometry->location->lat,
-            'lng' => $geodata->results[0]->geometry->location->lng,
+            'lat' => $lat,
+            'lng' => $lng,
         );
 
         return $data;
@@ -257,7 +263,7 @@ class GoogleStoreLocator {
         	'longCenter' => $this->lng_center,
         	'mapCSS' => $this->map_css,
         	'apiKey' => $this->apikeyMap,
-        	'mapStyle' => $map_style,
+        	'mapStyle' => $this->map_style,
         	'showLocation' => isset($_REQUEST['location']) ? true : false,
         	'markerImageLocation' => $this->marker_image_location,
         	'autoZoomCenter' => (count($stores) >= 1 and is_array($stores)) ? $this->auto_zoom_center : '',
