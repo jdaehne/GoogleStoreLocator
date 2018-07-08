@@ -9,6 +9,7 @@ GoogleStoreLocator 2.0
 + Add propertie &tplMapMarkerContent
 + Add propertie &tplMapMarker 
 + Add propertie &tplMap 
++ Add propertie &totalVar 
 + Add placeholder [[+gsl.lat]] [[+gsl.lng]] for Latitude and Longitude in Store-Template
 + Change property &tplMarker to &tplMarkerContent
 + Change property &sortby_tv to &sortby

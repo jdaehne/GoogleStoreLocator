@@ -1,4 +1,5 @@
 <?php
+
 /**
  * GoogleStoreLocator
  *
@@ -38,6 +39,7 @@ $config['location_radius'] = $modx->getOption('locationRadius', $scriptPropertie
 $config['where'] = $modx->getOption('where', $scriptProperties);
 $config['where'] = !empty($config['where']) ? $modx->fromJSON($config['where']) : array();
 $config['region'] = $modx->getOption('region', $scriptProperties);
+$config['total_var'] = $modx->getOption('totalVar', $scriptProperties, 'total', true);
 
 // Templating parameters
 $config['tpl_form'] = $modx->getOption('tplForm', $scriptProperties, 'gslFormTpl', true);
@@ -96,7 +98,7 @@ $storeList->renderMap($stores);
 $storeList->renderStores($stores);
 
 // set total placeholder
-$modx->setPlaceholder('total', count($stores));
+$modx->setPlaceholder($config['total_var'], count($stores));
 
 // debug mode
 if ($config['debug'] == true) {
