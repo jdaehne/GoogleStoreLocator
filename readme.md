@@ -38,6 +38,7 @@ Since the latest version of Google-API: API-KEY(s) are required! Create a API-KE
 | &sortby | menuindex | Any Resource Field (excluding Template Variables) to sort by. Some common fields to sort on are publishedon, menuindex, pagetitle etc, but see the Resources documentation for all fields. |
 | &sortdir | desc | Sort direction : asc or desc |
 | &region |  | Prefere a region to lookup for geodata first. Google-Region-Codes are like "de" for Germany etc. |
+| &totalVar | total | Name of the placeholder for storing the total number of results. |
 
 ## Template Properties
 | setting | default | description |
@@ -59,14 +60,20 @@ Since the latest version of Google-API: API-KEY(s) are required! Create a API-KE
 | &mapStyle |  | JSON Code to style the Map. Example: `[{"featureType": "water","stylers": [{ "color": "#80809e" }]`}] Styling-Wizard for Google-Maps: [https://mapstyle.withgoogle.com/](https://mapstyle.withgoogle.com/) |
 | &autoZoomCenter | 0 | Enable this property to make the map automatic center and zoom to fit all markers. |
 
-## Map Properties
-| setting | description |
+## Placeholders
+| name | description |
 | --- | --- |
 | gsl.form | Shows the Search Form. Place it anywhere after the snippet-call. |
 | gsl.map | Shows the Map. Place it anywhere after the snippet-call. |
 | gsl.stores | Shows the Stores. Place it anywhere after the snippet-call. |
 | total | Total number of Stores matching the Search. |
 | placeholders | Call this Placeholder anywhere inside: &tplStore to see all available Placeholders. |
+
+## Store Template Placeholders
+| name | description |
+| --- | --- |
+| gsl.lat | Latitude of the store. |
+| gsl.lng | Longitude of the store |
 
 ## Examples
 A simple Example of the minimum SnippetCall
