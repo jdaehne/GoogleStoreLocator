@@ -117,8 +117,15 @@ Preordering the stores by the location "Berlin" and show only stores inside the 
 ```
 
 ## Issues
-...
+If you have more than 50 stores the initail rendering of all stores will take a long time. Because the Google-API can only handle single addresses, the initial rendering will probably cause some server timeouts. The best way to handle this is just to wait a about 1 Minut and refresh the browser. After this refresh all stores should be rendert and stored inside the cache.
+I tested the extra with about 1500 stores. The first rendering took about 4 refreshes and 1 Minute in between every refresh. After that: everything runs smooth.
+Change a store/resource in the manager will delete this store from the cache and will be rewritten after the next request of the StoreLocation snippet. This won't take long, because it is just rendering the new added or changed stores.
+If you manually clear the complete site-cache it also clears the GoogleStoreLocator cache and it needs a new rendering of all stores.
 
-# Changes in Version 2.x
-...
+# Upgrading from Version 1.x to 2.x
+Upgrading from Version 1.x to 2.x needs some little Changes in the propertie-setup.
+1. the propertie `&tvNameZip` changed to `&tvNameZipcode`
+2. the tv `gslZip` changed to `gslZipcode`. If you used the default tv's, just add the propertie `&tvNameZipcode="gslZip"` to the snippetcall. That way you can still use the old tv.
+3. The `gslHousenumber` tv is added in 2.x. IN 1.x you just write the housenumber in the `gslStreet` tv. You still can do that. So just ignore the housenumber-tv and leave it blank or better just disable it from your store-template.
+Now everything should work as before.
 
