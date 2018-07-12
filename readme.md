@@ -32,7 +32,7 @@ Since the latest version of Google-API: API-KEY(s) are required! Create a API-KE
 | &limit | 0 | Limits the number of stores returned. Default "0" is unlimited results. |
 | &offset | 0 | An offset of resources returned by the criteria to skip. |
 | &location |  | Set a address to order the stores by default. This address will be replaced by the search form. |
-| &radius | 20 | Radius to limit the default result when &location is set. |
+| &locationRadius | 20 | Radius to limit the default result when &location is set. |
 | &markerImage |  | A URL to an image to be used instead of the default Google Map marker. |
 | &markerImageLocation |  | A URL to an image to be used instead of the default Google Map marker for the User-Position. |
 | &sortby | menuindex | Any Resource Field (excluding Template Variables) to sort by. Some common fields to sort on are publishedon, menuindex, pagetitle etc, but see the Resources documentation for all fields. |
