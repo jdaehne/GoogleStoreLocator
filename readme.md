@@ -49,6 +49,7 @@ Since the latest version of Google-API: API-KEY(s) are required! Create a API-KE
 | &tplMapMarker | gslMapMarkerTpl | Name of the Chunk to format the Map-Marker. |
 | &tplMapMarkerContent | gslMapMarkerContentTpl | Name of the Chunk to format the Map-Marker-Content. |
 | &tplNoResult | gslNoResultTpl | Name of the Chunk shows when no results are found. |
+| &tplMessage | gslMessageTpl | Name of the Chunk showing the message for the address search. |
 
 ## Map Properties
 | setting | default | description |
@@ -66,6 +67,7 @@ Since the latest version of Google-API: API-KEY(s) are required! Create a API-KE
 | gsl.form | Shows the Search Form. Place it anywhere after the snippet-call. |
 | gsl.map | Shows the Map. Place it anywhere after the snippet-call. |
 | gsl.stores | Shows the Stores. Place it anywhere after the snippet-call. |
+| gsl.message | Shows the Message of address Search. |
 | total | Total number of Stores matching the Search. |
 | placeholders | Call this Placeholder anywhere inside: &tplStore to see all available Placeholders. |
 
@@ -81,6 +83,7 @@ A simple Example of the minimum SnippetCall
 [[!GoogleStoreLocator]]
 [[!+gsl.form]]
 [[!+gsl.map]]
+[[!+gsl.message]]
 [[!+gsl.stores]]
 ```
 
