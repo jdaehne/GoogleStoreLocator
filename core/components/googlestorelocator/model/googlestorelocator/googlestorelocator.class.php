@@ -33,6 +33,7 @@ class GoogleStoreLocator {
         $this->tpl_form = $config['tpl_form'];
         $this->tpl_store = $config['tpl_store'];
         $this->tpl_noresult = $config['tpl_noresult'];
+        $this->tpl_message = $config['tpl_message'];
         $this->marker_image = $config['marker_image'];
         $this->marker_image_location = $config['marker_image_location'];
         $this->zoom = $config['zoom'];
@@ -184,7 +185,7 @@ class GoogleStoreLocator {
     public function getLngLat($address)
     {
         $address = urlencode($address);
-        $region = $this->region ? '&region='.$region : '';
+        $region = $this->region ? '&region='.$this->region : '';
         $url = 'https://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false&key='.$this->apikeyServer . $region;
         $geojson = file_get_contents($url);
         $geodata = json_decode($geojson);
@@ -200,6 +201,7 @@ class GoogleStoreLocator {
         $data = array(
             'lat' => $lat,
             'lng' => $lng,
+            'address' => $geodata->results[0]->formatted_address,
         );
 
         return $data;
@@ -224,6 +226,18 @@ class GoogleStoreLocator {
 
             $this->lat_center = $locationData['lat'];
             $this->lng_center = $locationData['lng'];
+        }else {
+            $stores = array();
+        }
+
+        if (!empty($_REQUEST['location'])) {
+            $message = $this->modx->getChunk($this->tpl_message, array(
+                'address' => $locationData['address'],
+            ));
+
+            $this->modx->toPlaceholders(array(
+                'message' => $message,
+            ), 'gsl');
         }
 
         return $stores;

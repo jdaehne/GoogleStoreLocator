@@ -48,6 +48,7 @@ $config['tpl_map'] = $modx->getOption('tplMap', $scriptProperties, 'gslMapTpl', 
 $config['tpl_map_marker'] = $modx->getOption('tplMapMarker', $scriptProperties, 'gslMapMarkerTpl', true);
 $config['tpl_map_marker_content'] = $modx->getOption('tplMapMarkerContent', $scriptProperties, 'gslMapMarkerContentTpl', true);
 $config['tpl_noresult'] = $modx->getOption('tplNoResult', $scriptProperties, 'gslNoResultTpl', true);
+$config['tpl_message'] = $modx->getOption('tplMessage', $scriptProperties, 'gslMessageTpl', true);
 
 // Map parameters
 $config['zoom'] = $modx->getOption('zoom', $scriptProperties, 8, true);
