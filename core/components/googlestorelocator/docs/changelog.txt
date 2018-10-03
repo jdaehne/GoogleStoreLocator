@@ -1,5 +1,14 @@
 Changelog for GoogleStoreLocator
 
+
+GoogleStoreLocator 2.0.1
+---------------------------------
++ Add message placeholder
++ Fix region propertie
++ Fix show no results if no address was found
+
+
+
 GoogleStoreLocator 2.0
 ---------------------------------
 + Add tv housenumber (propertie &tvname_housenumber)

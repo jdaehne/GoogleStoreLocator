@@ -16,7 +16,7 @@ $components = array(
     'packageName' => 'googlestorelocator',  /* No spaces, no dashes */
     'packageNameLower' => $packageNameLower,
     'packageDescription' => 'Proximity search plugin for MODX',
-    'version' => '2.0.0',
+    'version' => '2.0.1',
     'release' => 'pl',
     'author' => 'Quadro - Jan Dähne',
     'email' => '<https://www.quadro-system.de>',
@@ -265,6 +265,9 @@ $components = array(
                 'category' => 'googlestorelocator',
             ),
             'gslStoreTpl' => array(
+                'category' => 'googlestorelocator',
+            ),
+            'gslMessageTpl' => array(
                 'category' => 'googlestorelocator',
             ),
         ),

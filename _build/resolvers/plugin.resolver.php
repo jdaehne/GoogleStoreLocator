@@ -3,7 +3,7 @@
 * Resolver to connect plugins to system events for googlestorelocator extra
 *
 * Copyright 2018 by Quadro - Jan Dähne <https://www.quadro-system.de>
-* Created on 07-07-2018
+* Created on 10-03-2018
 *
  * googlestorelocator is free software; you can redistribute it and/or modify it under the
  * terms of the GNU General Public License as published by the Free Software

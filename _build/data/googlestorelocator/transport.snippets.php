@@ -3,7 +3,7 @@
  * snippets transport file for googlestorelocator extra
  *
  * Copyright 2018 by Quadro - Jan Dähne <https://www.quadro-system.de>
- * Created on 07-08-2018
+ * Created on 10-03-2018
  *
  * @package googlestorelocator
  * @subpackage build
@@ -28,9 +28,13 @@ $snippets = array();
 $snippets[1] = $modx->newObject('modSnippet');
 $snippets[1]->fromArray(array (
   'id' => 1,
-  'description' => 'A dynamic Store Locator for MODX using the Google-Map-API',
+  'property_preprocess' => false,
   'name' => 'GoogleStoreLocator',
+  'description' => 'A dynamic Store Locator for MODX using the Google-Map-API',
+  'properties' => 
+  array (
+  ),
 ), '', true, true);
-$snippets[1]->setContent(file_get_contents($sources['source_core'] . '/elements/snippets/googlestorelocator.snippet.php'));
+$snippets[1]->setContent(file_get_contents(MODX_BASE_PATH . 'assets/mycomponents/googlestorelocator/core/components/googlestorelocator/elements/snippets/googlestorelocator.snippet.php'));
 
 return $snippets;

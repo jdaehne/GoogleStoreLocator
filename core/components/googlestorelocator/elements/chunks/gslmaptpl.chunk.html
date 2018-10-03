@@ -2,23 +2,23 @@
 <script>
     function initMap() {
         var bounds  = new google.maps.LatLngBounds();
-
+        
         var centerMap = {lat: [[+latCenter]], lng: [[+longCenter]]};
         var map = new google.maps.Map(document.getElementById('googleStoreLocatorMap'), {
             zoom: [[+zoom]],
             scrollwheel: false,
             center: centerMap
         });
-
+        
         var infowindow = new google.maps.InfoWindow({
             maxWidth: 200
         });
-
-        [[+mapStyle:notempty=`var styles = [[+mapStyle]]
+        
+        [[+mapStyle:notempty=`var styles = [[+mapStyle]] 
         map.setOptions({styles: styles});`]]
-
+        
         [[+marker]]
-
+        
         [[+showLocation:notempty=`
         var marker = new google.maps.Marker({
             position: {lat: [[+latCenter]], lng: [[+longCenter]]},
@@ -28,15 +28,15 @@
         });
         var loc = new google.maps.LatLng(marker.position.lat(), marker.position.lng());
         bounds.extend(loc);`]]
-
-
+        
+        
         [[+autoZoomCenter:notempty=`
         map.fitBounds(bounds);
         map.panToBounds(bounds);
         google.maps.event.addListenerOnce(map, 'bounds_changed', function() {
             this.setZoom(Math.min(17, this.getZoom()));
         });`]]
-
+        
     }
 </script>
 <script async defer src="https://maps.googleapis.com/maps/api/js?callback=initMap&key=[[+apiKey]]"></script>

@@ -3,7 +3,7 @@
  * plugins transport file for googlestorelocator extra
  *
  * Copyright 2018 by Quadro - Jan Dähne <https://www.quadro-system.de>
- * Created on 07-08-2018
+ * Created on 10-03-2018
  *
  * @package googlestorelocator
  * @subpackage build
@@ -28,8 +28,13 @@ $plugins = array();
 $plugins[1] = $modx->newObject('modPlugin');
 $plugins[1]->fromArray(array (
   'id' => 1,
-  'description' => 'A dynamic Store Locator Snippet for MODX using the Google-Map-API',
+  'property_preprocess' => false,
   'name' => 'GoogleStoreLocator',
+  'description' => 'A dynamic Store Locator Snippet for MODX using the Google-Map-API',
+  'properties' => 
+  array (
+  ),
+  'disabled' => false,
 ), '', true, true);
 $plugins[1]->setContent(file_get_contents($sources['source_core'] . '/elements/plugins/googlestorelocator.plugin.php'));
 
