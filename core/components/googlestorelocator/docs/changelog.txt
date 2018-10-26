@@ -1,12 +1,16 @@
 Changelog for GoogleStoreLocator
 
 
+GoogleStoreLocator 2.0.2
+---------------------------------
++ Fix sorting of stores
+
+
 GoogleStoreLocator 2.0.1
 ---------------------------------
 + Add message placeholder
 + Fix region propertie
 + Fix show no results if no address was found
-
 
 
 GoogleStoreLocator 2.0
@@ -25,7 +29,6 @@ GoogleStoreLocator 2.0
 + Change tv gslZip to gslZipcode
 + Change propertie &tvname_zip to &tvname_zipcode
 + Change default value of propertie &locationRadius to 20
-
 
 
 GoogleStoreLocator 1.1.4

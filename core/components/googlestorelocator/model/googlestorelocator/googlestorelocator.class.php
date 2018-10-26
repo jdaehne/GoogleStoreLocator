@@ -58,7 +58,7 @@ class GoogleStoreLocator {
         if (!is_array($stores)) return false;
 
         usort($stores, function($a, $b) use ($sortby) {
-            return $a[$sortby] - $b[$sortby];
+            return strcmp($a[$sortby], $b[$sortby]);
         });
 
         if ($direction === 'desc'){
@@ -222,6 +222,11 @@ class GoogleStoreLocator {
 
                 // filter stores by radius
                 $stores = $this->filterStores($stores, 'distance', $radius);
+
+                // sort stores
+                if (!empty($_REQUEST['location'])) {
+                    $stores = $this->sortBy($stores, 'distance');
+                }
             }
 
             $this->lat_center = $locationData['lat'];
