@@ -69,11 +69,6 @@ $stores = $storeList->getStores();
 // sort stores
 $stores = $storeList->sortBy($stores, $config['sortby'], $config['sortdir']);
 
-// limit and offset stores (array, offset, limit)
-if ($config['limit'] > 0) {
-    $stores = array_slice($stores, $config['offset'] <= 0 ? 0 : $config['offset'], $config['limit']);
-}
-
 // get lat and lng of location set by Property or search form
 if (!empty($_REQUEST['location']) or !empty($config['location'])) {
     $stores = $storeList->setLocation($stores);
@@ -88,6 +83,13 @@ if (count($config['where'])  >= 1 and is_array($stores) and count($stores) >= 1)
     $stores = $storeList->filterStores($stores, $key, $value, $operator);
 }
 
+// set total placeholder
+$modx->setPlaceholder($config['total_var'], count($stores));
+
+// limit and offset stores (array, offset, limit)
+if ($config['limit'] > 0) {
+    $stores = array_slice($stores, $config['offset'] <= 0 ? 0 : $config['offset'], $config['limit']);
+}
 
 // render form
 $storeList->renderForm();
@@ -97,9 +99,6 @@ $storeList->renderMap($stores);
 
 // render stores
 $storeList->renderStores($stores);
-
-// set total placeholder
-$modx->setPlaceholder($config['total_var'], count($stores));
 
 // debug mode
 if ($config['debug'] == true) {

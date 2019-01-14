@@ -1,6 +1,11 @@
 Changelog for GoogleStoreLocator
 
 
+GoogleStoreLocator 2.0.3
+---------------------------------
++ Fix pagination
+
+
 GoogleStoreLocator 2.0.2
 ---------------------------------
 + Fix sorting of stores
