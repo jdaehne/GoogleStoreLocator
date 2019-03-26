@@ -247,6 +247,7 @@ class GoogleStoreLocator {
         if (!empty($_REQUEST['location'])) {
             $message = $this->modx->getChunk($this->tpl_message, array(
                 'address' => $locationData['address'],
+                'radius' => $radius,
             ));
 
             $this->modx->toPlaceholders(array(
