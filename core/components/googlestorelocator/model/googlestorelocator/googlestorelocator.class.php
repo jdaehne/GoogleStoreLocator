@@ -18,6 +18,8 @@ class GoogleStoreLocator {
         $this->apikeyServer = $this->modx->getOption('googlestorelocator.apikey_server');
         $this->apikeyMap = $this->modx->getOption('googlestorelocator.apikey_map');
         $this->parents = $config['parents'];
+        $this->tvname_lat = $config['tvname_lat'];
+        $this->tvname_lng = $config['tvname_lng'];
         $this->tvname_street = $config['tvname_street'];
         $this->tvname_housenumber = $config['tvname_housenumber'];
         $this->tvname_zipcode = $config['tvname_zipcode'];
@@ -97,6 +99,8 @@ class GoogleStoreLocator {
             $store = array(
                 'id' => $item->id,
                 'name' => $item->pagetitle,
+                'lat' => $page->getTVValue($this->tvname_lat),
+                'lng' => $page->getTVValue($this->tvname_lng),
                 'street' => $page->getTVValue($this->tvname_street),
                 'housenumber' => $page->getTVValue($this->tvname_housenumber),
                 'zipcode' => $page->getTVValue($this->tvname_zipcode),
