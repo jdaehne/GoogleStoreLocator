@@ -16,6 +16,8 @@ $modx->loadClass('GoogleStoreLocator', $modelPath, true, true);
 
 // Configuration parameters
 $config['parents'] = array_unique(explode(',', $modx->getOption('parents', $scriptProperties, $modx->resource->get('id'), true)));
+$config['tvname_lat'] = $modx->getOption('tvNameLat', $scriptProperties, 'gslLat', true);
+$config['tvname_lng'] = $modx->getOption('tvNameLng', $scriptProperties, 'gslLng', true);
 $config['tvname_zipcode'] = $modx->getOption('tvNameZipcode', $scriptProperties, 'gslZipcode', true);
 $config['tvname_city'] = $modx->getOption('tvNameCity', $scriptProperties, 'gslCity', true);
 $config['tvname_street'] = $modx->getOption('tvNameStreet', $scriptProperties, 'gslStreet', true);
