@@ -309,6 +309,9 @@ class GoogleStoreLocator {
 
         $stores = array_filter($stores, function ($var) {
             switch ($this->operator) {
+                case 'contains':
+                    return strpos($var[$this->key], $this->value) !== false;
+                    break;
                 case '==':
                 case '=':
                     return ($var[$this->key] == $this->value);
