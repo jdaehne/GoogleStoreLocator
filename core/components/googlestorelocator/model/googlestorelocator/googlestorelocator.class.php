@@ -377,8 +377,8 @@ class GoogleStoreLocator {
         $options = array(
             xPDO::OPT_CACHE_KEY => 'googlestorelocator',
         );
-        $this->modx->cacheManager->delete($store[id] . '.store.gsl', $options);
-        $this->modx->cacheManager->set($store[id] . '.store.gsl', $store, 31556926, $options);
+        $this->modx->cacheManager->delete($store['id'] . '.store.gsl', $options);
+        $this->modx->cacheManager->set($store['id'] . '.store.gsl', $store, 31556926, $options);
 
     }
 
