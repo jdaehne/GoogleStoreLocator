@@ -24,6 +24,8 @@ Since the latest version of Google-API: API-KEY(s) are required! Create a API-KE
 | &tvNameHousenumber | gslHousenumber | Name of the TV holding the Housenumber of the Store. |
 | &tvNameState | gslState | Name of the TV holding the State of the Store. |
 | &tvNameCountry | gslCountry | Name of the TV holding the Country of the Store. |
+| &tvNameLat | gslLat | Name of the TV holding the Latitude of the Store (to skip geocoding). |
+| &tvNameLng | gslLng | Name of the TV holding the Longitude of the Store (to skip geocoding). |
 | &includeTVs |  | Comma-separated list of TVs that should be included in the placeholders available to each store template. Example: "storename,time" will produce the placeholders and . |
 | &tvPrefix | tv. | Prefix TV property. |
 | &unit | K | Options: K = kilometers / M = miles / N = nautical |
@@ -124,6 +126,7 @@ If you have more than 50 stores the initail rendering of all stores will take a 
 I tested the extra with about 1500 stores. The first rendering took about 4 refreshes and 1 Minute in between every refresh. After that: everything runs smooth.
 Change a store/resource in the manager will delete this store from the cache and will be rewritten after the next request of the StoreLocation snippet. This won't take long, because it is just rendering the new added or changed stores.
 If you manually clear the complete site-cache it also clears the GoogleStoreLocator cache and it needs a new rendering of all stores.
+If your store resources already have latitude and longitude TVs, specify them with the `&tvNameLat` and `&tvNameLng` properties to skip the overhead of geocoding the addresses.
 
 # Upgrading from Version 1.x to 2.x
 Upgrading from Version 1.x to 2.x needs some little Changes in the propertie-setup.
