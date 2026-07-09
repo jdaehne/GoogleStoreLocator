@@ -58,6 +58,11 @@ class GoogleStoreLocator {
         if (!is_array($stores)) return false;
 
         usort($stores, function($a, $b) use ($sortby) {
+            if ($sortby === 'distance') {
+                $a = floatval(str_replace(',', '.', $a[$sortby]));
+                $b = floatval(str_replace(',', '.', $b[$sortby]));
+                return $a <=> $b;
+            }
             return strcmp($a[$sortby], $b[$sortby]);
         });
 
