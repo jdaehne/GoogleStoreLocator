@@ -11,7 +11,9 @@
 
 // load Class
 $modelPath = $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/googlestorelocator/model/googlestorelocator/';
-$modx->loadClass('GoogleStoreLocator', $modelPath, true, true);
+if (!class_exists('GoogleStoreLocator')) {
+    require_once $modelPath . 'googlestorelocator.class.php';
+}
 
 
 // Configuration parameters
@@ -39,7 +41,8 @@ $config['default_radius'] = $modx->getOption('defaultRadius', $scriptProperties,
 $config['location'] = $modx->getOption('location', $scriptProperties);
 $config['location_radius'] = $modx->getOption('locationRadius', $scriptProperties, 20, true);
 $config['where'] = $modx->getOption('where', $scriptProperties);
-$config['where'] = !empty($config['where']) ? $modx->fromJSON($config['where']) : array();
+$config['where'] = !empty($config['where']) ? json_decode($config['where'], true) : array();
+$config['where'] = is_array($config['where']) ? $config['where'] : array();
 $config['region'] = $modx->getOption('region', $scriptProperties);
 $config['total_var'] = $modx->getOption('totalVar', $scriptProperties, 'total', true);
 
@@ -77,9 +80,9 @@ if (!empty($_REQUEST['location']) or !empty($config['location'])) {
 }
 
 // filter stores if set in properties
-if (count($config['where'])  >= 1 and is_array($stores) and count($stores) >= 1) {
+if (count($config['where']) >= 1 && is_array($stores) && count($stores) >= 1) {
     $key = explode(':', key($config['where']));
-    $operator = $key[1];
+    $operator = $key[1] ?? '<=';
     $key = $key[0];
     $value = reset($config['where']);
     $stores = $storeList->filterStores($stores, $key, $value, $operator);

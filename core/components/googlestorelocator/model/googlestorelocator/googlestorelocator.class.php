@@ -2,14 +2,53 @@
 
 class GoogleStoreLocator {
 
+    /** @var modX */
+    public $modx;
+
+    public $apikeyServer;
+    public $apikeyMap;
+    public $parents;
+    public $tvname_lat;
+    public $tvname_lng;
+    public $tvname_street;
+    public $tvname_housenumber;
+    public $tvname_zipcode;
+    public $tvname_city;
+    public $tvname_state;
+    public $tvname_country;
+    public $include_tvs;
+    public $tv_prefix;
+    public $unit;
+    public $tpl_map;
+    public $tpl_map_marker;
+    public $tpl_map_marker_content;
+    public $tpl_form;
+    public $tpl_store;
+    public $tpl_noresult;
+    public $tpl_message;
+    public $marker_image;
+    public $marker_image_location;
+    public $zoom;
+    public $zoom_search;
+    public $zoom_position;
+    public $lat_center;
+    public $lng_center;
+    public $map_css;
+    public $map_style;
+    public $auto_zoom_center;
+    public $default_radius;
+    public $location;
+    public $location_radius;
+    public $region;
+
 
     /**
      * GoogleStoreLocator constructor
      *
-     * @param MODX $modx A reference to the MODX instance.
-     * @param array $options An array of options. Optional.
+     * @param modX $modx A reference to the MODX instance.
+     * @param array $config An array of options. Optional (e.g. the plugin only needs the cache methods).
      */
-     public function __construct(MODX $modx, array $config = array())
+    public function __construct(modX $modx, array $config = array())
     {
         // init modx
         $this->modx = $modx;
@@ -17,40 +56,39 @@ class GoogleStoreLocator {
         // config
         $this->apikeyServer = $this->modx->getOption('googlestorelocator.apikey_server');
         $this->apikeyMap = $this->modx->getOption('googlestorelocator.apikey_map');
-        $this->parents = $config['parents'];
-        $this->tvname_lat = $config['tvname_lat'];
-        $this->tvname_lng = $config['tvname_lng'];
-        $this->tvname_street = $config['tvname_street'];
-        $this->tvname_housenumber = $config['tvname_housenumber'];
-        $this->tvname_zipcode = $config['tvname_zipcode'];
-        $this->tvname_city = $config['tvname_city'];
-        $this->tvname_state = $config['tvname_state'];
-        $this->tvname_country = $config['tvname_country'];
-        $this->include_tvs = $config['include_tvs'];
-        $this->tv_prefix = $config['tv_prefix'];
-        $this->unit = $config['unit'];
-        $this->tpl_map = $config['tpl_map'];
-        $this->tpl_map_marker = $config['tpl_map_marker'];
-        $this->tpl_map_marker_content = $config['tpl_map_marker_content'];
-        $this->tpl_form = $config['tpl_form'];
-        $this->tpl_store = $config['tpl_store'];
-        $this->tpl_noresult = $config['tpl_noresult'];
-        $this->tpl_message = $config['tpl_message'];
-        $this->marker_image = $config['marker_image'];
-        $this->marker_image_location = $config['marker_image_location'];
-        $this->zoom = $config['zoom'];
-        $this->zoom_search = $config['zoom_search'];
-        $this->zoom_position = $config['zoom_position'];
-        $this->lat_center = $config['lat_center'];
-        $this->lng_center = $config['lng_center'];
-        $this->map_css = $config['map_css'];
-        $this->map_style = $config['map_style'];
-        $this->auto_zoom_center = $config['auto_zoom_center'];
-        $this->default_radius = $config['default_radius'];
-        $this->location = $config['location'];
-        $this->location_radius = $config['location_radius'];
-        $this->region = $config['region'];
-        //$max_execution_time = ini_get('max_execution_time');
+        $this->parents = $config['parents'] ?? array();
+        $this->tvname_lat = $config['tvname_lat'] ?? 'gslLat';
+        $this->tvname_lng = $config['tvname_lng'] ?? 'gslLng';
+        $this->tvname_street = $config['tvname_street'] ?? 'gslStreet';
+        $this->tvname_housenumber = $config['tvname_housenumber'] ?? 'gslHousenumber';
+        $this->tvname_zipcode = $config['tvname_zipcode'] ?? 'gslZipcode';
+        $this->tvname_city = $config['tvname_city'] ?? 'gslCity';
+        $this->tvname_state = $config['tvname_state'] ?? 'gslState';
+        $this->tvname_country = $config['tvname_country'] ?? 'gslCountry';
+        $this->include_tvs = $config['include_tvs'] ?? false;
+        $this->tv_prefix = $config['tv_prefix'] ?? 'tv.';
+        $this->unit = $config['unit'] ?? 'K';
+        $this->tpl_map = $config['tpl_map'] ?? 'gslMapTpl';
+        $this->tpl_map_marker = $config['tpl_map_marker'] ?? 'gslMapMarkerTpl';
+        $this->tpl_map_marker_content = $config['tpl_map_marker_content'] ?? 'gslMapMarkerContentTpl';
+        $this->tpl_form = $config['tpl_form'] ?? 'gslFormTpl';
+        $this->tpl_store = $config['tpl_store'] ?? 'gslStoreTpl';
+        $this->tpl_noresult = $config['tpl_noresult'] ?? 'gslNoResultTpl';
+        $this->tpl_message = $config['tpl_message'] ?? 'gslMessageTpl';
+        $this->marker_image = $config['marker_image'] ?? '';
+        $this->marker_image_location = $config['marker_image_location'] ?? 'https://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+        $this->zoom = $config['zoom'] ?? 8;
+        $this->zoom_search = $config['zoom_search'] ?? 11;
+        $this->zoom_position = $config['zoom_position'] ?? 11;
+        $this->lat_center = $config['lat_center'] ?? '49.14721';
+        $this->lng_center = $config['lng_center'] ?? '8.2202';
+        $this->map_css = $config['map_css'] ?? 'height: 400px; margin: 30px 0;';
+        $this->map_style = $config['map_style'] ?? '';
+        $this->auto_zoom_center = $config['auto_zoom_center'] ?? '';
+        $this->default_radius = $config['default_radius'] ?? 20;
+        $this->location = $config['location'] ?? '';
+        $this->location_radius = $config['location_radius'] ?? 20;
+        $this->region = $config['region'] ?? '';
     }
 
 
@@ -60,12 +98,14 @@ class GoogleStoreLocator {
         if (!is_array($stores)) return false;
 
         usort($stores, function($a, $b) use ($sortby) {
+            $a = $a[$sortby] ?? '';
+            $b = $b[$sortby] ?? '';
             if ($sortby === 'distance') {
-                $a = floatval(str_replace(',', '.', $a[$sortby]));
-                $b = floatval(str_replace(',', '.', $b[$sortby]));
+                $a = floatval(str_replace(',', '.', (string) $a));
+                $b = floatval(str_replace(',', '.', (string) $b));
                 return $a <=> $b;
             }
-            return strcmp($a[$sortby], $b[$sortby]);
+            return strcmp((string) $a, (string) $b);
         });
 
         if ($direction === 'desc'){
@@ -92,48 +132,46 @@ class GoogleStoreLocator {
         foreach($resources as $item) {
 
             //check if store is in cache
-            $storeCache = $this->getCache($item->id);
-            if ($storeCache != false) {
+            $storeCache = $this->getCache($item->get('id'));
+            if (!empty($storeCache)) {
                 $stores[] = $storeCache;
                 continue;
             }
 
-            $page = $this->modx->getObject('modResource', $item->id);
             $fields = $item->toArray();
 
             $store = array(
-                'id' => $item->id,
-                'name' => $item->pagetitle,
-                'lat' => $page->getTVValue($this->tvname_lat),
-                'lng' => $page->getTVValue($this->tvname_lng),
-                'street' => $page->getTVValue($this->tvname_street),
-                'housenumber' => $page->getTVValue($this->tvname_housenumber),
-                'zipcode' => $page->getTVValue($this->tvname_zipcode),
-                'city' => $page->getTVValue($this->tvname_city),
-                'state' => $page->getTVValue($this->tvname_state),
-                'country' => $page->getTVValue($this->tvname_country),
-                'menuindex' => $item->menuindex,
+                'id' => $item->get('id'),
+                'name' => $item->get('pagetitle'),
+                'lat' => $item->getTVValue($this->tvname_lat),
+                'lng' => $item->getTVValue($this->tvname_lng),
+                'street' => $item->getTVValue($this->tvname_street),
+                'housenumber' => $item->getTVValue($this->tvname_housenumber),
+                'zipcode' => $item->getTVValue($this->tvname_zipcode),
+                'city' => $item->getTVValue($this->tvname_city),
+                'state' => $item->getTVValue($this->tvname_state),
+                'country' => $item->getTVValue($this->tvname_country),
+                'menuindex' => $item->get('menuindex'),
             );
 
             $store = array_merge($fields, $store);
 
             // include tvs
-            if ($this->include_tvs != false){
-                $tvs = explode(",", $this->include_tvs);
-                $placeholder = array();
+            if (!empty($this->include_tvs)){
+                $tvs = array_map('trim', explode(',', $this->include_tvs));
                 foreach ($tvs as $tv){
-                    $store[$this->tv_prefix.$tv] = $page->getTVValue($tv);
+                    $store[$this->tv_prefix . $tv] = $item->getTVValue($tv);
                 }
             }
 
             // add Latitude and Longitude if empty
-            if (empty($store['lat']) or empty($store['lng'])) {
+            if (empty($store['lat']) || empty($store['lng'])) {
                 $address = $this->formatAddress($store['street'], $store['housenumber'], $store['zipcode'], $store['city'], $store['state'], $store['country']);
                 $latlng = $this->getLngLat($address);
-                $store = $stores[$key] = array_merge($store, $latlng);
+                $store = array_merge($store, $latlng);
             }
 
-            if (!empty($store['lat']) and !empty($store['lng'])) {
+            if (!empty($store['lat']) && !empty($store['lng'])) {
                 $this->addCache($store);
             }
 
@@ -152,7 +190,7 @@ class GoogleStoreLocator {
 
         foreach ($stores as $key => $store) {
             $distance = NULL;
-            if (!empty($store['lat']) and !empty($store['lng'])) {
+            if (!empty($store['lat']) && !empty($store['lng'])) {
                 $distance = $this->distance($lat, $lng, $store['lat'], $store['lng'], $unit);
             }
             $stores[$key]['distance'] = $distance;
@@ -166,12 +204,18 @@ class GoogleStoreLocator {
     // calculates distance between two points
     public function distance($lat1, $lng1, $lat2, $lng2, $unit = 'K')
     {
+        $lat1 = (float) $lat1;
+        $lng1 = (float) $lng1;
+        $lat2 = (float) $lat2;
+        $lng2 = (float) $lng2;
+
         $theta = $lng1 - $lng2;
         $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
-        $dist = acos($dist);
+        // rounding errors can push the value slightly above 1, which makes acos() return NAN
+        $dist = acos(max(-1.0, min(1.0, $dist)));
         $dist = rad2deg($dist);
         $miles = $dist * 60 * 1.1515;
-        $unit = strtoupper($unit);
+        $unit = strtoupper((string) $unit);
 
         // return distance in km, nautical or miles
         if ($unit == "K") {
@@ -193,25 +237,26 @@ class GoogleStoreLocator {
     // get lat lng from Google
     public function getLngLat($address)
     {
-        $address = urlencode($address);
-        $region = $this->region ? '&region='.$this->region : '';
-        $url = 'https://maps.google.com/maps/api/geocode/json?address='.$address.'&sensor=false&key='.$this->apikeyServer . $region;
-        $geojson = file_get_contents($url);
-        $geodata = json_decode($geojson);
+        $data = array(
+            'lat' => '',
+            'lng' => '',
+            'address' => '',
+        );
 
-        if ($geodata->status !== 'OK') {
-            // set error
-            $this->modx->log(xPDO::LOG_LEVEL_ERROR, '[GoogleStoreLocator] Could not get Geo-Data of Address: ' . $address . ' Errormessage: ' . $geodata->error_message);
+        $region = $this->region ? '&region=' . urlencode($this->region) : '';
+        $url = 'https://maps.googleapis.com/maps/api/geocode/json?address=' . urlencode((string) $address) . '&key=' . urlencode((string) $this->apikeyServer) . $region;
+        $geojson = @file_get_contents($url);
+        $geodata = $geojson !== false ? json_decode($geojson) : null;
+
+        if (!is_object($geodata) || ($geodata->status ?? '') !== 'OK' || empty($geodata->results[0])) {
+            $this->modx->log(xPDO::LOG_LEVEL_ERROR, '[GoogleStoreLocator] Could not get Geo-Data of Address: ' . $address . ' Errormessage: ' . (is_object($geodata) ? ($geodata->error_message ?? $geodata->status ?? '') : 'No response from Google'));
+            return $data;
         }
 
-        $lat = str_replace(",", ".", $geodata->results[0]->geometry->location->lat);
-        $lng = str_replace(",", ".", $geodata->results[0]->geometry->location->lng);
-
-        $data = array(
-            'lat' => $lat,
-            'lng' => $lng,
-            'address' => $geodata->results[0]->formatted_address,
-        );
+        $result = $geodata->results[0];
+        $data['lat'] = str_replace(',', '.', (string) $result->geometry->location->lat);
+        $data['lng'] = str_replace(',', '.', (string) $result->geometry->location->lng);
+        $data['address'] = $result->formatted_address ?? '';
 
         return $data;
     }
@@ -219,15 +264,15 @@ class GoogleStoreLocator {
     // set location by user input or property
     public function setLocation($stores)
     {
-        $address = urlencode(!empty($_REQUEST['location']) ? $_REQUEST['location'] : $this->location);
-        $radius = (int) isset($_REQUEST['radius']) ? $_REQUEST['radius'] : $this->location_radius;
+        $address = !empty($_REQUEST['location']) ? (string) $_REQUEST['location'] : (string) $this->location;
+        $radius = (int) (isset($_REQUEST['radius']) ? $_REQUEST['radius'] : $this->location_radius);
 
         $locationData = $this->getLngLat($address);
 
-        if (!empty($locationData['lat']) and !empty($locationData['lng'])) {
-            if (count($stores) >= 1 and is_array($stores)) {
+        if (!empty($locationData['lat']) && !empty($locationData['lng'])) {
+            if (is_array($stores) && count($stores) >= 1) {
                 // add distance
-                $stores = $this->addDistanceToStores($stores, $locationData['lat'], $locationData['lng']);
+                $stores = $this->addDistanceToStores($stores, $locationData['lat'], $locationData['lng'], $this->unit);
 
                 // filter stores by radius
                 $stores = $this->filterStores($stores, 'distance', $radius);
@@ -246,7 +291,7 @@ class GoogleStoreLocator {
 
         if (!empty($_REQUEST['location'])) {
             $message = $this->modx->getChunk($this->tpl_message, array(
-                'address' => $locationData['address'],
+                'address' => htmlspecialchars($locationData['address'], ENT_QUOTES, 'UTF-8'),
                 'radius' => $radius,
             ));
 
@@ -263,14 +308,14 @@ class GoogleStoreLocator {
     {
         $mapMarkerOutput = '';
 
-        if (count($stores) >= 1 and is_array($stores)) {
+        if (is_array($stores) && count($stores) >= 1) {
             foreach ($stores as $store) {
-                if (!empty($store['lat']) and !empty($store['lng'])) {
+                if (!empty($store['lat']) && !empty($store['lng'])) {
 
                     // Replacing/escaping single quotes for the js-map
                     $jsStorePlaceholder = array();
                     foreach ($store as $key => $value) {
-                        $jsStorePlaceholder[$key] = str_replace("'","\\'", $value);
+                        $jsStorePlaceholder[$key] = is_scalar($value) ? str_replace("'", "\\'", (string) $value) : $value;
                     }
 
                     $mapMarkerInfoOutput = $this->modx->getChunk($this->tpl_map_marker_content, $jsStorePlaceholder);
@@ -286,7 +331,7 @@ class GoogleStoreLocator {
         }
 
         $mapOutput = $this->modx->getChunk($this->tpl_map, array(
-        	'marker' => preg_replace( "/\r|\n/", "", $mapMarkerOutput),
+        	'marker' => preg_replace( "/\r|\n/", "", (string) $mapMarkerOutput),
         	'zoom' => $this->zoom,
         	'latCenter' => $this->lat_center,
         	'longCenter' => $this->lng_center,
@@ -295,7 +340,7 @@ class GoogleStoreLocator {
         	'mapStyle' => $this->map_style,
         	'showLocation' => isset($_REQUEST['location']) ? true : false,
         	'markerImageLocation' => $this->marker_image_location,
-        	'autoZoomCenter' => (count($stores) >= 1 and is_array($stores)) ? $this->auto_zoom_center : '',
+        	'autoZoomCenter' => (is_array($stores) && count($stores) >= 1) ? $this->auto_zoom_center : '',
         ));
 
         $this->modx->toPlaceholders(array(
@@ -308,34 +353,24 @@ class GoogleStoreLocator {
     {
         if (!is_array($stores)) return false;
 
-        $this->key = $key;
-        $this->value = $value;
-        $this->operator = $operator;
-
-        $stores = array_filter($stores, function ($var) {
-            switch ($this->operator) {
+        $stores = array_filter($stores, function ($var) use ($key, $value, $operator) {
+            $field = $var[$key] ?? null;
+            switch ($operator) {
                 case 'contains':
-                    return strpos($var[$this->key], $this->value) !== false;
-                    break;
+                    return strpos((string) $field, (string) $value) !== false;
                 case '==':
                 case '=':
-                    return ($var[$this->key] == $this->value);
-                    break;
+                    return ($field == $value);
                 case '>':
-                    return ($var[$this->key] > $this->value);
-                    break;
+                    return ($field > $value);
                 case '>=':
-                    return ($var[$this->key] >= $this->value);
-                    break;
+                    return ($field >= $value);
                 case '<':
-                    return ($var[$this->key] < $this->value);
-                    break;
+                    return ($field < $value);
                 case '<=':
                 default:
-                    return ($var[$this->key] <= $this->value);
-                    break;
+                    return ($field <= $value);
             }
-
         });
 
         return $stores;
@@ -345,8 +380,8 @@ class GoogleStoreLocator {
     public function renderForm()
     {
         $formOutput = $this->modx->getChunk($this->tpl_form, array(
-        	'location' => $_REQUEST['location'],
-        	'radius' => isset($_REQUEST['radius']) ? $_REQUEST['radius'] : $this->default_radius,
+        	'location' => htmlspecialchars((string) ($_REQUEST['location'] ?? ''), ENT_QUOTES, 'UTF-8'),
+        	'radius' => (int) (isset($_REQUEST['radius']) ? $_REQUEST['radius'] : $this->default_radius),
         ));
 
         $this->modx->toPlaceholders(array(
@@ -359,7 +394,7 @@ class GoogleStoreLocator {
     {
         $storesOutput = '';
 
-        if (count($stores) >= 1 and is_array($stores)) {
+        if (is_array($stores) && count($stores) >= 1) {
             foreach ($stores as $store) {
                 // let the user see all available placeholders via [[+placeholders]] placeholder
                 $store['placeholders'] = print_r($store,true);

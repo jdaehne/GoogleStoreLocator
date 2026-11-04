@@ -1,6 +1,22 @@
 Changelog for GoogleStoreLocator
 
 
+GoogleStoreLocator 2.1.0
+---------------------------------
++ Fix PHP 8.x warnings/deprecations (undefined array keys, dynamic properties, null arguments)
++ Fix "Undefined array key" warnings caused by the plugin on every page request
++ Fix compatibility with MODX 3
++ Fix fatal error on PHP 8 when caching a store ($store[id]) (thanks to watou)
++ Fix double URL-encoding of the searched location
++ Fix property &unit being ignored for the distance calculation
++ Fix NAN distance for stores at exactly the searched location
++ Fix escaping of the search input in the form and message templates
++ Add properties &tvNameLat and &tvNameLng to skip geocoding for stores with coordinates (thanks to watou)
++ Add placeholder [[+radius]] to &tplMessage (thanks to watou)
++ Add operator "contains" to &where (thanks to watou)
++ Fix sorting by distance (thanks to Mark Hamstra)
+
+
 GoogleStoreLocator 2.0.3
 ---------------------------------
 + Fix pagination

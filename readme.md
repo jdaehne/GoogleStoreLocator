@@ -30,7 +30,7 @@ Since the latest version of Google-API: API-KEY(s) are required! Create a API-KE
 | &tvPrefix | tv. | Prefix TV property. |
 | &unit | K | Options: K = kilometers / M = miles / N = nautical |
 | &defaultRadius | 20 | Default selected Radius of the search Form. |
-| &where |  | Filter Stores by any placeholder like: `{"active:=":"1"}` Operators: >,>=,<,<=,=,== |
+| &where |  | Filter Stores by any placeholder like: `{"active:=":"1"}` Operators: >,>=,<,<=,=,==,contains |
 | &limit | 0 | Limits the number of stores returned. Default "0" is unlimited results. |
 | &offset | 0 | An offset of resources returned by the criteria to skip. |
 | &location |  | Set a address to order the stores by default. This address will be replaced by the search form. |

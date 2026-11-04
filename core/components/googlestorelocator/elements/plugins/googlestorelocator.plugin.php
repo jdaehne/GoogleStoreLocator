@@ -12,7 +12,9 @@
  
 // load Class
 $modelPath = $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/googlestorelocator/model/googlestorelocator/';
-$modx->loadClass('GoogleStoreLocator', $modelPath, true, true);
+if (!class_exists('GoogleStoreLocator')) {
+    require_once $modelPath . 'googlestorelocator.class.php';
+}
 
 $gsl = new GoogleStoreLocator($modx);
 
