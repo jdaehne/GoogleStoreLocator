@@ -1,0 +1,58 @@
+{
+  "name": "GoogleStoreLocator",
+  "lowCaseName": "googlestorelocator",
+  "description": "A dynamic Store Locator for MODX using the Google-Map-API",
+  "author": "Quadro - Jan Dähne",
+  "version": "2.1.0-pl",
+  "package": {
+    "elements": {
+      "snippets": [
+        {
+          "name": "GoogleStoreLocator",
+          "description": "A dynamic Store Locator for MODX using the Google-Map-API",
+          "file": "googlestorelocator.snippet.php"
+        }
+      ],
+      "plugins": [
+        {
+          "name": "GoogleStoreLocator",
+          "file": "googlestorelocator.plugin.php",
+          "events": ["OnDocFormSave", "OnLoadWebDocument", "OnSiteRefresh"]
+        }
+      ],
+      "chunks": [
+        { "name": "gslFormTpl", "file": "gslformtpl.chunk.html" },
+        { "name": "gslMapTpl", "file": "gslmaptpl.chunk.html" },
+        { "name": "gslMapMarkerTpl", "file": "gslmapmarkertpl.chunk.html" },
+        { "name": "gslMapMarkerContentTpl", "file": "gslmapmarkercontenttpl.chunk.html" },
+        { "name": "gslMessageTpl", "file": "gslmessagetpl.chunk.html" },
+        { "name": "gslNoResultTpl", "file": "gslnoresulttpl.chunk.html" },
+        { "name": "gslStoreTpl", "file": "gslstoretpl.chunk.html" }
+      ],
+      "tvs": [
+        { "caption": "Street", "name": "gslStreet", "type": "text", "sortOrder": 10 },
+        { "caption": "Housenumber", "name": "gslHousenumber", "type": "text", "sortOrder": 20 },
+        { "caption": "Zipcode", "name": "gslZipcode", "type": "text", "sortOrder": 30 },
+        { "caption": "City", "name": "gslCity", "type": "text", "sortOrder": 40 },
+        { "caption": "State", "name": "gslState", "type": "text", "sortOrder": 50 },
+        { "caption": "Country", "name": "gslCountry", "type": "text", "sortOrder": 60 },
+        { "caption": "Sortierer", "name": "sortierer", "type": "text", "sortOrder": 100 }
+      ]
+    },
+    "systemSettings": [
+      { "key": "apikey_server", "type": "textfield", "area": "API", "value": "" },
+      { "key": "apikey_map", "type": "textfield", "area": "API", "value": "" }
+    ]
+  },
+  "build": {
+    "readme": "docs/readme.txt",
+    "license": "docs/license.txt",
+    "changelog": "docs/changelog.txt",
+    "resolver": {
+      "after": ["setupoptions.resolver.php"]
+    },
+    "setupOptions": {
+      "source": "setup.options.php"
+    }
+  }
+}
