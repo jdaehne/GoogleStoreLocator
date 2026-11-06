@@ -135,3 +135,10 @@ Upgrading from Version 1.x to 2.x needs some little Changes in the propertie-set
 3. The `gslHousenumber` tv is added in 2.x. IN 1.x you just write the housenumber in the `gslStreet` tv. You still can do that. So just ignore the housenumber-tv and leave it blank or better just disable it from your store-template.
 Now everything should work as before.
 
+
+# Development
+The transport package is built with [Git Package Management](https://github.com/theboxer/Git-Package-Management) **v1** (`master` branch) on MODX 2.8, so the package installs in MODX 2 and MODX 3.
+1. Put MODX, GPM and this repository side by side in one folder (GPM "all in one folder" layout) and install GPM with `gpm/cli/bin/gpm gpm:install --corePath=/path/to/modx/core/`.
+2. Install the package for development: `gpm/cli/bin/gpm package:install --dir=GoogleStoreLocator`. Elements are created as static elements, so changes to the files take effect immediately.
+3. After changes to `_build/config.json` run `gpm/cli/bin/gpm package:update --pkg=GoogleStoreLocator`.
+4. Set the version in `_build/config.json` and `core/components/googlestorelocator/docs/changelog.txt`, then build with `gpm/cli/bin/gpm package:build --pkg=GoogleStoreLocator`. The transport package is written to `_packages/`.
